@@ -233,6 +233,12 @@ are not part of the standard Elastic stack, but can be used to enrich it with ex
 The documentation for these extensions is provided inside each individual subdirectory, on a per-extension basis. Some
 of them require manual changes to the default ELK configuration.
 
+### How can I use the `sgadmin` tool provided by SearchGuard
+
+```
+docker-compose exec -T elasticsearch plugins/search-guard-5/tools/sgadmin.sh
+```
+
 ## JVM tuning
 
 ### How can I specify the amount of memory used by a service?
