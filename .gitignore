@@ -1,0 +1,3 @@
+*elasticsearch-data*
+elasticsearch/config/sg_roles_mapping.yml
+elasticsearch/config/sg_internal_users.yml

@@ -24,10 +24,7 @@ Default configuration of Search Guard in this repo is:
 
 Existing users:
 
-* *admin* (password: *admin*): No restrictions for this user, can do everything
-* *logstash* (password: *logstash*): CRUD permissions for logstash-\* index
-* *kibanaro* (password: *kibanaro)*: Kibana user which can read every index
-* *kibanaserver* (password: *kibanaserver*): User for the Kibana server (all permissions for .kibana index)
+* *logstash*: CRUD permissions for logstash-\* index
 
 ## Contents
 
@@ -159,6 +156,32 @@ configuration of a component.
 The Kibana default configuration is stored in `kibana/config/kibana.yml`.
 
 It is also possible to map the entire `config` directory instead of a single file.
+
+### How do I edit users and user access for Kibana/ElasticSearch?
+
+Searchguard is in charge of handling users and authentication. For now, we are managing files by hand.... yes... ya heard me.
+
+#### Users
+
+Users are configured in `elasticsearch/config/sg_internal_users.yml`. This file just contains a mapping of user -> password combinations.
+Example:
+
+https://github.com/deviantony/docker-elk/blob/searchguard/elasticsearch/config/sg_internal_users.yml
+
+In order to add or modify a user, you must use the `sgadmin` tool to hash the password, like so:
+
+```shell
+docker-compose exec -T elasticsearch plugins/search-guard-5/tools/hash.sh -p super_secret_password
+```
+
+You can then add or modify the user with the created hashed password.
+
+#### Roles (user permissions)
+
+Roles are configured in `elasticsearch/config/sg_roles.yml`. However, you most likely can just use one of the existing roles.
+
+In particular, most of the login users at Spinifex should have admin level access, and we are using the preset `logstash` role for our
+`logstash` user. To assign users to the existing groups, you must edit `elasticsearch/config/sg_roles_mapping.yml` BY HAND.
 
 ### How can I tune the Logstash configuration?
 
