@@ -159,7 +159,8 @@ It is also possible to map the entire `config` directory instead of a single fil
 
 ### How do I edit users and user access for Kibana/ElasticSearch?
 
-Searchguard is in charge of handling users and authentication. For now, we are managing files by hand.... yes... ya heard me.
+Searchguard is in charge of handling users and authentication. Since searchguard uses a file for it's users, we do not store this file
+in source control. Instead, we use ansible to manage the user file.
 
 #### Users
 
@@ -168,13 +169,20 @@ Example:
 
 https://github.com/deviantony/docker-elk/blob/searchguard/elasticsearch/config/sg_internal_users.yml
 
+All users and passwords are kept in a file encrypted by ansible vault, `ansible/vars/users.yml`.
+
 In order to add or modify a user, you must use the `sgadmin` tool to hash the password, like so:
 
 ```shell
 docker-compose exec -T elasticsearch plugins/search-guard-5/tools/hash.sh -p super_secret_password
 ```
 
-You can then add or modify the user with the created hashed password.
+You can then add that user and password to the aforementioned file. To update the file on the production host,
+you must run ansible:
+
+```shell
+ansible-playbook -i ansible/inventory.yml ansible/playbook.yml --vault-password-file ~/.vault_pass
+```
 
 #### Roles (user permissions)
 
