@@ -1,2 +1,3 @@
 *elasticsearch-data*
 elasticsearch/config/sg_internal_users.yml
+kibana/config/kibana.yml

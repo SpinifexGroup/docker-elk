@@ -2,8 +2,13 @@
 - hosts: all
   vars_files:
     - ./vars/users.yml
+    - ./vars/main.yml
   tasks:
     - name: Create searchguard users
       template:
         src: ./templates/users.j2
         dest: ../elasticsearch/config/sg_internal_users.yml
+    - name: Create Kibana config
+      template:
+        src: ./templates/kibana.j2
+        dest: ../kibana/config/kibana.yml

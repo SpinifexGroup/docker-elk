@@ -19,6 +19,6 @@ xpack.reporting.enabled: false
 ## Custom configuration
 #
 elasticsearch.username: "kibanaserver"
-elasticsearch.password: "kibanaserver"
+elasticsearch.password: "{{ users.kibanaserver.plaintext_password }}"
 
-searchguard.cookie.password: "123567818187654rwrwfsfshdhdhtegdhfzftdhncn"
+searchguard.cookie.password: "{{ sg_cookie_password }}"
