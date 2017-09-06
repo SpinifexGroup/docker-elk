@@ -8,11 +8,21 @@
       template:
         src: ./templates/users.j2
         dest: ../elasticsearch/config/sg_internal_users.yml
+      notify: "restart elasticsearch"
     - name: Create Kibana config
       template:
         src: ./templates/kibana.j2
         dest: ../kibana/config/kibana.yml
+      notify: "restart kibana"
     - name: Create Logstash config
       template:
         src: ./templates/logstash.j2
         dest: ../logstash/pipeline/logstash.conf
+      notify: "restart logstash"
+  handlers:
+    - name: restart elasticsearch
+      command: docker-compose restart elasticsearch
+    - name: restart kibana
+      command: docker-compose restart kibana
+    - name: restart logstash
+      command: docker-compose restart logstash
