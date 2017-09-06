@@ -12,3 +12,7 @@
       template:
         src: ./templates/kibana.j2
         dest: ../kibana/config/kibana.yml
+    - name: Create Logstash config
+      template:
+        src: ./templates/logstash.j2
+        dest: ../logstash/pipeline/logstash.conf
