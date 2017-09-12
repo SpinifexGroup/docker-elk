@@ -21,7 +21,12 @@
       notify: "restart logstash"
   handlers:
     - name: reload elasticsearch
-      command: docker-compose build elasticsearch && docker-compose up -d elasticsearch && docker-compose exec -T elasticsearch plugins/search-guard-5/tools/sgadmin.sh -cd config/ -ts config/truststore.jks -ks config/kirk-keystore.jks -icl
+      command: "{{ item }}"
+      with_items:
+      - docker-compose build elasticsearch
+      - docker-compose up -d elasticsearch
+      - sleep 10
+      - docker-compose exec -T elasticsearch plugins/search-guard-5/tools/sgadmin.sh -cd config/ -ts config/truststore.jks -ks config/kirk-keystore.jks -icl
     - name: restart kibana
       command: docker-compose restart kibana
     - name: restart logstash
