@@ -1,0 +1,28 @@
+---
+- hosts: all
+  vars_files:
+    - ./vars/users.yml
+    - ./vars/main.yml
+  tasks:
+    - name: Create searchguard users
+      template:
+        src: ./templates/users.j2
+        dest: ../elasticsearch/config/sg_internal_users.yml
+      notify: "reload elasticsearch"
+    - name: Create Kibana config
+      template:
+        src: ./templates/kibana.j2
+        dest: ../kibana/config/kibana.yml
+      notify: "restart kibana"
+    - name: Create Logstash config
+      template:
+        src: ./templates/logstash.j2
+        dest: ../logstash/pipeline/logstash.conf
+      notify: "restart logstash"
+  handlers:
+    - name: reload elasticsearch
+      command: docker-compose build elasticsearch && docker-compose up -d elasticsearch && docker-compose exec -T elasticsearch plugins/search-guard-5/tools/sgadmin.sh -cd config/ -ts config/truststore.jks -ks config/kirk-keystore.jks -icl
+    - name: restart kibana
+      command: docker-compose restart kibana
+    - name: restart logstash
+      command: docker-compose restart logstash

@@ -17,5 +17,7 @@ input {
 output {
     elasticsearch {
         hosts => "elasticsearch:9200"
+        user => "logstash"
+        password => "{{ users.logstash.plaintext_password }}"
     }
 }
