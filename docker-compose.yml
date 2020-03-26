@@ -7,6 +7,11 @@ services:
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch-data:/usr/share/elasticsearch/data
+      - /home/ubuntu/certs/esnode.pem:/usr/share/elasticsearch/config/esnode.pem
+      - /home/ubuntu/certs/esnode-key.pem:/usr/share/elasticsearch/config/esnode-key.pem
+      - /home/ubuntu/certs/root-ca.pem:/usr/share/elasticsearch/config/root-ca.pem
+      - /home/ubuntu/certs/kirk.pem:/usr/share/elasticsearch/config/kirk.pem
+      - /home/ubuntu/certs/kirk-key.pem:/usr/share/elasticsearch/config/kirk-key.pem
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -20,10 +25,12 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - /etc/letsencrypt:/etc/letsencrypt
     ports:
       - "5000:5000"
       - "5001:5001/udp"
       - "5002:5002/udp"
+      - "5003:5003"
     environment:
       LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
     networks:

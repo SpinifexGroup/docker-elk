@@ -27,9 +27,16 @@ xpack.watcher.enabled: false
 
 ## Search Guard
 #
-searchguard.ssl.transport.keystore_filepath: node-0-keystore.jks
-searchguard.ssl.transport.truststore_filepath: truststore.jks
-searchguard.ssl.transport.enforce_hostname_verification: false
 
+searchguard.ssl.transport.pemcert_filepath: esnode.pem
+searchguard.ssl.transport.pemkey_filepath: esnode-key.pem
+searchguard.ssl.transport.pemtrustedcas_filepath: root-ca.pem
+searchguard.ssl.transport.enforce_hostname_verification: false
+searchguard.ssl.http.enabled: false
+searchguard.ssl.http.pemcert_filepath: esnode.pem
+searchguard.ssl.http.pemkey_filepath: esnode-key.pem
+searchguard.ssl.http.pemtrustedcas_filepath: root-ca.pem
+#searchguard.allow_unsafe_democertificates: true
+#searchguard.allow_default_init_sgindex: true
 searchguard.authcz.admin_dn:
-  - "CN=kirk,OU=client,O=client,l=tEst,C=De"
+  - CN=kirk,OU=client,O=client,L=test,C=de

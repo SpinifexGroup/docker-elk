@@ -8,8 +8,11 @@ sg_kibana_server:
 
 sg_all_access:
   users:
-    - jcrown
     - qbunt
     - bbiagas
     - dragon
     - channaford
+    - gbodi
+    - jcrown
+    - pcalvillo
+    - htaylor
